@@ -24,7 +24,6 @@ public class CRMTest {
         driver.findElement(By.xpath("//*[@id=\"mailbox\"]/form[1]/button[2]")).click();
         Thread.sleep(5000);
         driver.findElement(By.xpath("//span[@class='compose-button__txt']")).click();
-        //Здесь тест почему-то не работает
         Thread.sleep(5000);
         driver.findElement(By.xpath("//input[contains(@class,'container')]/ancestor::label")).sendKeys("rai17@list.ru");
         driver.findElement(By.name("Subject")).sendKeys("Тест");
