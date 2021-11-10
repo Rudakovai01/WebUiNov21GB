@@ -1,10 +1,6 @@
 package HomeWork4;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import java.lang.reflect.Array;
 
 public class TriangleTest {
     @BeforeAll
@@ -27,6 +23,14 @@ public class TriangleTest {
     @Test
     @DisplayName("Проверка выброса исключения при длине стороны треугольника <=0")
     void exeptionIsTriangleSidePositive () throws Exception {
-        Assertions.assertThrows(Exception.class, ()-> TriangleSquare.getTriangleSquare(-3,7,8));
+        TriangleSquareCalculator result = new TriangleSquareCalculator();
+        Assertions.assertThrows(Exception.class, ()-> result.getTriangleSquare(-3,7,8));
+    }
+
+    @Test
+    @DisplayName("Проверка правильности рассчета")
+    void calculationCheck () throws Exception {
+        TriangleSquareCalculator result2 = new TriangleSquareCalculator();
+        Assertions.assertEquals(17.41,result2.getTriangleSquare(7,5,9), .01);
     }
  }
