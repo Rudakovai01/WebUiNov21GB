@@ -84,6 +84,12 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/ru.yandex.qatools.htmlelements/htmlelements-matchers -->
+		<dependency>
+			<groupId>ru.yandex.qatools.htmlelements</groupId>
+			<artifactId>htmlelements-matchers</artifactId>
+			<version>1.20.0</version>
+		</dependency>
 
 
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
