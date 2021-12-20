@@ -1,18 +1,23 @@
 package HW6;
 
+import Lesson7.CustomLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Hw6Test {
-    WebDriver driver;
+import java.util.Iterator;
+
+public class MyFinalProjectTest {
+    EventFiringWebDriver driver;
     WebDriverWait webDriverWait;
 
     @BeforeAll
@@ -22,13 +27,17 @@ public class Hw6Test {
 
     @BeforeEach
     void setupBrowser() {
-        driver = new ChromeDriver();
+        driver = new EventFiringWebDriver(new ChromeDriver());
+        driver.register(new CustomLogger());
         webDriverWait = new WebDriverWait(driver,5);
         driver.get("https://mail.ru/");
         driver.manage().window().maximize();
     }
 
+    @TmsLink("MYP-1")
+    @DisplayName("UI автотест mail.ru")
     @Test
+    @Description("Логин на mail.ru, создание и отправка письма и создание облака")
     void loginTest() throws InterruptedException {
         //Для начала надо создать экземляр страницы логина и передать туда драйвер
         new LoginPage(driver)
@@ -36,9 +45,6 @@ public class Hw6Test {
                 .fillPassword("ForTest_4321")
                 .submitLogin();
         Thread.sleep(5000);
-        //Почему-то не идут проверки ниже (39 и 40 строки), не пойму, без них весь тест работает прекрасно.
-        //Assertions.assertEquals("Алексей Максимов",driver.findElement(By.xpath("///span[contains(@class,'compose-button__ico')]")).getText());
-        //Assertions.assertTrue (driver.findElement(By.xpath("//span[contains(@class,'compose-button__ico')]")).isDisplayed());
 
         new CreateLetterPage(driver)
                 .createNewLetterWindow()
@@ -47,8 +53,6 @@ public class Hw6Test {
                 .fillLetterBody("This e-mail was sent by robot. Please don't reply")
                 .sendLetter();
         Thread.sleep(5000);
-        //почему-то не работает умное ожидание
-        //webDriverWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[contains(@class,'layer__link')]"))));
         Assertions.assertEquals("Письмо отправлено", driver.findElement(By.xpath("//*[contains(@class,'layer__link')]")).getText());
 
         driver.get("https://cloud.mail.ru/home/");
@@ -57,5 +61,18 @@ public class Hw6Test {
                 .createCloud()
                 .folderNameWrite("Checked_My first cloud folder")
                 .createFolderButtonClick();
+    }
+
+    @AfterEach
+    void TearDown (){
+        LogEntries browserLogs = driver.manage().logs().get(LogType.BROWSER);
+        Iterator<LogEntry> iterator = browserLogs.iterator();
+        while (iterator.hasNext()){
+            Allure.addAttachment("Лог в консоли браузера", iterator.next().getMessage());
+        }
+        for (LogEntry log: browserLogs) {
+            System.out.println(log.getMessage());
+        }
+        driver.quit();
     }
 }

@@ -1,6 +1,7 @@
 package HW6;
 
 import Lesson6.BaseView;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,27 +24,32 @@ public class CreateLetterPage extends BaseView {
         super(driver);
     }
 
+    @Step("Открытие формы для нового письма")
     public CreateLetterPage createNewLetterWindow() throws InterruptedException {
         newLetterButtonClick.click();
         Thread.sleep(5000);
         return this;
     }
 
+    @Step("Заполняем поле 'кому'")
     public CreateLetterPage fillEmail(String email){
         inputEmailAddress.sendKeys(email);
         return this;
     }
 
+    @Step("Заполняем поле 'тема письма'")
     public CreateLetterPage fillSubject (String subject){
         inputSubject.sendKeys(subject);
         return this;
     }
 
+    @Step("Набираем текст самого письма")
     public CreateLetterPage fillLetterBody(String letter){
         writeLetter.sendKeys(letter);
         return this;
     }
 
+    @Step("Нажимаем кнопку 'Отправить письмо'")
     public void sendLetter(){
         sendButtonClick.click();
     }
