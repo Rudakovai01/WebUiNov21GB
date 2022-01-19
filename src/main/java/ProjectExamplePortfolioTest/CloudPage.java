@@ -1,6 +1,5 @@
-package HW6;
+package ProjectExamplePortfolioTest;
 
-import Lesson6.BaseView;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

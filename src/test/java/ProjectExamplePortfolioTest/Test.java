@@ -1,4 +1,4 @@
-package HW6;
+package ProjectExamplePortfolioTest;
 
 import Lesson7.CustomLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -13,10 +13,9 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.Iterator;
 
-public class MyFinalProjectTest {
+public class Test {
     EventFiringWebDriver driver;
     WebDriverWait webDriverWait;
 
@@ -36,10 +35,9 @@ public class MyFinalProjectTest {
 
     @TmsLink("MYP-1")
     @DisplayName("UI автотест mail.ru")
-    @Test
+    @org.junit.jupiter.api.Test
     @Description("Логин на mail.ru, создание и отправка письма и создание облака")
     void loginTest() throws InterruptedException {
-        //Для начала надо создать экземляр страницы логина и передать туда драйвер
         new LoginPage(driver)
                 .fillLogin ("rudakov_test")
                 .fillPassword("ForTest_4321")

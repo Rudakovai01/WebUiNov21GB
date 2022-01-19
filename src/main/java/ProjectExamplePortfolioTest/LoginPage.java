@@ -1,6 +1,5 @@
-package HW6;
+package ProjectExamplePortfolioTest;
 
-import Lesson6.BaseView;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,12 +37,5 @@ public class LoginPage extends BaseView {
     public LoginPage (WebDriver driver) {
         super(driver);
     }
-
-    // вариант поставить проверку из страницы
-//    public LoginPage checkSucessMessage (WebDriver driver){
-//        WebElement testElement1 = driver.findElement(By.xpath("//*[contains(@class,'ph-name svelte-1vf03eq')]"));
-//        Assertions.assertEquals("Алексей Максимов", testElement1.getText());
-//        //Assertions.assertEquals("Алексей Максимов", testElement1.getText());
-//        return this;
 }
 
